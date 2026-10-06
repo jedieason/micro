@@ -14,7 +14,7 @@
 
 ## 1. Star the Project
 
-If you find this tool helpful, please consider clicking **① Star** at the top right of this GitHub page to support the project!
+Please click **① Star** at the top right of this GitHub page to bookmark the repository and stay updated with future feature releases and question fixes!
 
 ![Star the Project](docs/steps/00-star.png)
 
