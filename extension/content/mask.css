@@ -1,0 +1,41 @@
+/* Only text/label elements marked by the adapter are hidden; the site remains usable. */
+html[data-ntu-exam] [data-ntu-answer-hint] { visibility: hidden !important; }
+
+/* Hide slide annotations before submitting answers in exam session */
+html[data-ntu-hide-annotations] #contentDiv svg,
+html[data-ntu-hide-annotations] #contentDiv svg *,
+html[data-ntu-hide-annotations] .openseadragon-canvas svg,
+html[data-ntu-hide-annotations] .openseadragon-canvas svg *,
+html[data-ntu-hide-annotations] .openseadragon-canvas .anno,
+html[data-ntu-hide-annotations] .openseadragon-canvas [class*="anno" i],
+html[data-ntu-hide-annotations] .anno,
+html[data-ntu-hide-annotations] .annotation {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Keep the thumbnail and action together when the Chrome side panel narrows the page. */
+[data-ntu-slide-actions] {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 290px !important;
+  vertical-align: middle !important;
+}
+[data-ntu-slide-actions] > a {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+[data-ntu-slide-actions] > a img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 250px !important;
+  height: auto !important;
+}
+
+html[data-ntu-exam-mode] #Div_LeftTop,
+html[data-ntu-exam-mode] #imgMenu { display: none !important; }
