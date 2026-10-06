@@ -1,6 +1,16 @@
-# micro — NTU Slide Practice
+<p align="center">
+  <img src="logo.png" alt="臺大玻片跑臺機 Logo" width="128" height="128" />
+</p>
 
-[繁體中文](README.md) · [English](README.en.md)
+<h1 align="center">臺大玻片跑臺機</h1>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
+</p>
+
+<p align="center">
+  [繁體中文](README.md) · [English](README.en.md)
+</p>
 
 ## 1. Download
 
