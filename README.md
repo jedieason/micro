@@ -12,11 +12,11 @@
   <a href="README.md">繁體中文</a> · <a href="README.en.md">English</a>
 </p>
 
-## 1. 給予專案 Star
+## 1. 收藏專案（Star）
 
-請先在 GitHub 頁面右上角點擊 **① Star**，收藏專案以接收日後的功能更新與題目修正通知！
+目前工具仍在測試階段，建議先點擊右上角 **① Star** 收藏專案，以便後續即時接收 Bug 修正、題庫更新與正式版發布通知！
 
-![給予專案 Star](docs/steps/00-star.png)
+![收藏專案](docs/steps/00-star.png)
 
 ## 2. 下載
 

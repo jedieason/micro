@@ -14,7 +14,7 @@
 
 ## 1. Star the Project
 
-Please click **① Star** at the top right of this GitHub page to bookmark the repository and stay updated with future feature releases and question fixes!
+This tool is currently in its beta testing stage. It is recommended to click **① Star** at the top right to bookmark the project so you can get notified about bug fixes, slide dataset updates, and the official release!
 
 ![Star the Project](docs/steps/00-star.png)
 
