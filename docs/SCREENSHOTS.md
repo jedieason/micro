@@ -4,10 +4,11 @@
 
 拍攝日期：2026-10-06。所有圖片均取自實際瀏覽器或作業系統操作，沒有以示意網頁或生成圖片冒充實際介面。
 
-README 使用 `docs/steps/` 的 15 張標註圖：每步一句操作指令，搭配紅圈；需要依序操作時，圖上加上 1、2、3 編號。標註圖由下列實拍原圖裁切並加上標記，控制項、文字、狀態與結果保持原樣。可編輯的 SVG 存在 `docs/annotations/`。
+README 使用 `docs/steps/` 的 16 張標註圖：每步一句操作指令，搭配紅圈；需要依序操作時，圖上加上 1、2、3 編號。標註圖由下列實拍原圖裁切並加上標記，控制項、文字、狀態與結果保持原樣。可編輯的 SVG 存在 `docs/annotations/`。
 
 | 教學標註圖 | 實拍來源 |
 | --- | --- |
+| 00-star.png | 00-github-star.png (GitHub repo 首頁 Star 按鈕實拍) |
 | 01-download.png | 02-github-download-zip.jpg |
 | 02-find-zip.png | 03-downloads.jpg |
 | 03-extract.png | 04-macos-zip.jpg |
