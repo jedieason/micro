@@ -15,22 +15,25 @@ async function read() {
     if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
       const origOrgan = slide.organ;
       const origDiagnosis = slide.diagnosis;
+      const origDescription = slide.description;
       const origConfirmed = slide.confirmed;
       const origOrigin = slide.answerOrigin;
       const origOrganAliases = JSON.stringify(slide.organAliases || []);
       const origDiagnosisAliases = JSON.stringify(slide.diagnosisAliases || []);
       slide.organ = ref.organ;
       slide.diagnosis = ref.diagnosis;
+      if (ref.description !== undefined) slide.description = ref.description;
       slide.organAliases = ref.organAliases || [];
       slide.diagnosisAliases = ref.diagnosisAliases || [];
       slide.confirmed = true;
       slide.answerOrigin = 'syllabus';
-      if (origOrgan !== slide.organ || origDiagnosis !== slide.diagnosis || origConfirmed !== slide.confirmed || origOrigin !== slide.answerOrigin || origOrganAliases !== JSON.stringify(slide.organAliases) || origDiagnosisAliases !== JSON.stringify(slide.diagnosisAliases)) {
+      if (origOrgan !== slide.organ || origDiagnosis !== slide.diagnosis || origDescription !== slide.description || origConfirmed !== slide.confirmed || origOrigin !== slide.answerOrigin || origOrganAliases !== JSON.stringify(slide.organAliases) || origDiagnosisAliases !== JSON.stringify(slide.diagnosisAliases)) {
         changed = true;
       }
-    } else if (ref && (!slide.organ || !slide.diagnosis || !slide.confirmed)) {
+    } else if (ref && (!slide.organ || !slide.diagnosis || !slide.confirmed || (ref.description && !slide.description))) {
       slide.organ = slide.organ || ref.organ;
       slide.diagnosis = slide.diagnosis || ref.diagnosis;
+      if (ref.description && !slide.description) slide.description = ref.description;
       slide.organAliases = (slide.organAliases && slide.organAliases.length) ? slide.organAliases : (ref.organAliases || []);
       slide.diagnosisAliases = (slide.diagnosisAliases && slide.diagnosisAliases.length) ? slide.diagnosisAliases : (ref.diagnosisAliases || []);
       slide.confirmed = true;
@@ -44,6 +47,7 @@ async function read() {
       if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
         slide.organ = ref.organ;
         slide.diagnosis = ref.diagnosis;
+        if (ref.description !== undefined) slide.description = ref.description;
         slide.organAliases = ref.organAliases || [];
         slide.diagnosisAliases = ref.diagnosisAliases || [];
         slide.confirmed = true;
@@ -88,10 +92,11 @@ async function handle(m, sender) {
         const hasSiteAnswer = parsed && !!input.organ && !!input.diagnosis;
         const isManual = input.answerOrigin === 'manual';
 
-        let organ, diagnosis, organAliases, diagnosisAliases, confirmed, answerOrigin;
+        let organ, diagnosis, description, organAliases, diagnosisAliases, confirmed, answerOrigin;
         if (isManual) {
           organ = input.organ || '';
           diagnosis = input.diagnosis || '';
+          description = input.description || '';
           organAliases = input.organAliases || [];
           diagnosisAliases = input.diagnosisAliases || [];
           confirmed = input.confirmed === true;
@@ -99,6 +104,7 @@ async function handle(m, sender) {
         } else if (ref && ref.organ && ref.diagnosis) {
           organ = ref.organ;
           diagnosis = ref.diagnosis;
+          description = ref.description || input.description || '';
           organAliases = ref.organAliases || [];
           diagnosisAliases = ref.diagnosisAliases || [];
           confirmed = true;
@@ -106,6 +112,7 @@ async function handle(m, sender) {
         } else {
           organ = input.organ || '';
           diagnosis = input.diagnosis || '';
+          description = input.description || ref?.description || '';
           organAliases = input.organAliases || [];
           diagnosisAliases = input.diagnosisAliases || [];
           confirmed = hasSiteAnswer || input.confirmed === true;
@@ -116,6 +123,7 @@ async function handle(m, sender) {
           ...input,
           organ,
           diagnosis,
+          description,
           organAliases,
           diagnosisAliases,
           confirmed,
@@ -210,6 +218,7 @@ async function handle(m, sender) {
   if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
     slide.organ = ref.organ;
     slide.diagnosis = ref.diagnosis;
+    if (ref.description !== undefined) slide.description = ref.description;
     slide.organAliases = ref.organAliases || [];
     slide.diagnosisAliases = ref.diagnosisAliases || [];
     slide.confirmed = true;

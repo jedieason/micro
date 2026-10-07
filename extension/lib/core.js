@@ -49,6 +49,7 @@ export function cleanSlide(input) {
   const url = viewerURL(input.viewerUrl);
   const text = key => String(input[key] || '').trim().slice(0, 10000);
   return {id: url, code: code(input.code), viewerUrl: url, organ: text('organ'), diagnosis: text('diagnosis'),
+    description: text('description'),
     organAliases: Array.isArray(input.organAliases) ? input.organAliases.map(String).slice(0,100) : [],
     diagnosisAliases: Array.isArray(input.diagnosisAliases) ? input.diagnosisAliases.map(String).slice(0,100) : [],
     sourceAnswerText: text('sourceAnswerText'), answerOrigin: ['site-columns','finding-pattern','syllabus'].includes(input.answerOrigin) ? input.answerOrigin : 'manual', confirmed: input.confirmed === true, indexedAt: new Date().toISOString()};

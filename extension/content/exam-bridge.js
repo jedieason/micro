@@ -51,10 +51,14 @@
         if (state.floor && viewport.viewportToImageZoom) state.imageFloor=positive(viewport.viewportToImageZoom(state.floor));
       }
       if (!state.floor) {document.documentElement.dataset.ntuExamZoom='unavailable';return;}
-      document.documentElement.dataset.ntuExamZoom='ready';
-      if (viewport.getZoom() < state.floor || viewport.getZoom(true) < state.floor) {
+      const currentZoom = Math.min(viewport.getZoom(), viewport.getZoom(true));
+      if (currentZoom < state.floor) {
+        document.documentElement.dataset.ntuExamZoom='pending';
         state.enforcing=true;
         try {original.zoomTo.call(viewport,state.floor,undefined,true);} finally {state.enforcing=false;}
+      }
+      if (viewport.getZoom(true) >= state.floor * 0.98) {
+        document.documentElement.dataset.ntuExamZoom='ready';
       }
     };
     const recalibrate = () => {state.floor=null;state.imageFloor=null;constrain();};

@@ -39,3 +39,16 @@ html[data-ntu-hide-annotations] .annotation {
 
 html[data-ntu-exam-mode] #Div_LeftTop,
 html[data-ntu-exam-mode] #imgMenu { display: none !important; }
+
+/* In exam mode, blur the slide image before 4x zoom calibration is ready to prevent guessing answers from initial overview */
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) #contentDiv,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) .openseadragon-container,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) .openseadragon-canvas,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) .openseadragon-canvas canvas,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) .openseadragon-canvas img,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) #contentDiv canvas,
+html[data-ntu-exam-mode]:not([data-ntu-exam-zoom="ready"]) #contentDiv img {
+  filter: blur(16px) !important;
+  opacity: 0.8 !important;
+  transition: filter 0.2s ease-out, opacity 0.2s ease-out !important;
+}

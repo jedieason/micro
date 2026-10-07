@@ -9,6 +9,44 @@ const run=fn=>async event=>{try{await fn(event);}catch(e){notice(e.message);}};
 async function api(type,data={}) {const r=await chrome.runtime.sendMessage({type,tabId,...data});if(!r?.ok)throw new Error(r?.error||'擴充功能未回應。');return r.data;}
 async function page(type,data={}) {if(!connected)throw new Error('請切換到台大玻片系統分頁，並重新整理網站。');const r=await chrome.tabs.sendMessage(tabId,{type,...data});if(!r?.ok)throw new Error(r?.error||'原站尚未回應。');return r.data;}
 function tab(name){mode=name;for(const n of ['bank','exam','history']){$(`${n}View`).hidden=n!==name;$(`${n}Tab`).classList.toggle('active',n===name);}}
+async function redoWrong(ids){
+  const wrongIds=[...new Set(ids)];
+  const pool=state.bank.filter(s=>wrongIds.includes(s.id)&&ready(s));
+  if(!pool.length)throw new Error('沒有可作答的錯題。');
+  await api('START',{ids:pool.map(s=>s.id),count:pool.length});
+  renderKey='';tab('exam');await refresh();
+}
+function renderCompletedOrEmpty(){
+  renderKey='';
+  const lastSession=[...state.sessions].reverse().find(s=>s.tabId===tabId&&(s.status==='completed'||s.status==='ended'));
+  const completed=lastSession?.attempts.filter(a=>a?.state==='revealed')||[];
+  if(!lastSession||!completed.length){
+    $('question').replaceChildren(node('p','請先加入題目。','muted'));
+    return;
+  }
+  const wrong=[...new Set(lastSession.slides.filter((slide,i)=>lastSession.attempts[i]?.state==='revealed'&&(lastSession.attempts[i].selfGrade||lastSession.attempts[i].result?.grade)!=='correct').map(s=>s.id))];
+  const correct=completed.filter(a=>(a.selfGrade||a.result?.grade)==='correct').length;
+  const box=$('question');box.replaceChildren();
+  const card=node('div','','completed-card');
+  card.append(node('h3',lastSession.status==='completed'?'🎉 本輪練習已完成！':'本輪練習已結束'));
+  card.append(node('p',`共答 ${completed.length} / ${lastSession.slides.length} 題 · 答對 ${correct} 題 · 答錯 ${wrong.length} 題`,'stats'));
+  const actions=node('div','','actions');
+  if(wrong.length>0){
+    const redoBtn=node('button',`重做錯題（${wrong.length} 題） →`,'primary wide');
+    redoBtn.disabled=!connected;
+    redoBtn.onclick=run(async()=>redoWrong(wrong));
+    actions.append(redoBtn);
+  }else{
+    actions.append(node('p','太棒了，全部答對無錯題！🎉','correct'));
+  }
+  const bankBtn=node('button','返回選題清單','secondary wide');
+  bankBtn.onclick=()=>tab('bank');
+  const historyBtn=node('button','查看歷史紀錄與詳解','text');
+  historyBtn.onclick=()=>tab('history');
+  actions.append(bankBtn,historyBtn);
+  card.append(actions);
+  box.append(card);
+}
 async function refresh() {
   const [current]=await chrome.tabs.query({active:true,currentWindow:true});
   tabId=current?.id;connected=isSite(current?.url);
@@ -16,7 +54,7 @@ async function refresh() {
   $('bankTab').disabled=!!active;
   renderBank();renderHistory();
   if(lastTabId!==tabId){renderKey='';tab(active?'exam':'bank');lastTabId=tabId;}
-  if(active)await renderQuestion();else{$('question').replaceChildren(node('p','請先加入題目。','muted'));renderKey='';}
+  if(active)await renderQuestion();else renderCompletedOrEmpty();
 }
 function renderBank(){
   const source=state.sources[tabId];
@@ -62,6 +100,7 @@ function editSlide(slide={}){
   for(const [id,key]of Object.entries({editCode:'code',editURL:'viewerUrl',source:'sourceAnswerText'}))$(id).value=slide[key]||ref[key]||'';
   $('editOrgan').value=(useSyllabus?ref.organ:(slide.organ||ref.organ))||'';
   $('editDiagnosis').value=(useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis))||'';
+  $('editDescription').value=(useSyllabus?(ref.description||slide.description):(slide.description||ref.description))||'';
   $('editURL').readOnly=!!slide.id;
   $('organAliases').value=((useSyllabus?ref.organAliases:(slide.organAliases?.length?slide.organAliases:ref.organAliases))||[]).join('\n');
   $('diagnosisAliases').value=((useSyllabus?ref.diagnosisAliases:(slide.diagnosisAliases?.length?slide.diagnosisAliases:ref.diagnosisAliases))||[]).join('\n');
@@ -69,7 +108,7 @@ function editSlide(slide={}){
   $('editor').showModal();
 }
 $('new').onclick=()=>editSlide();$('closeEditor').onclick=()=>$('editor').close();
-$('editForm').onsubmit=async event=>{event.preventDefault();try{state=await api('SAVE_SLIDE',{slide:{code:$('editCode').value,viewerUrl:$('editURL').value,organ:$('editOrgan').value,diagnosis:$('editDiagnosis').value,sourceAnswerText:$('source').value,confirmed:$('confirmed').checked,organAliases:$('organAliases').value.split('\n').filter(s=>s.trim()),diagnosisAliases:$('diagnosisAliases').value.split('\n').filter(s=>s.trim())}});$('editor').close();renderBank();}catch(e){$('editError').textContent=e.message;}};
+$('editForm').onsubmit=async event=>{event.preventDefault();try{state=await api('SAVE_SLIDE',{slide:{code:$('editCode').value,viewerUrl:$('editURL').value,organ:$('editOrgan').value,diagnosis:$('editDiagnosis').value,description:$('editDescription').value,sourceAnswerText:$('source').value,confirmed:$('confirmed').checked,organAliases:$('organAliases').value.split('\n').filter(s=>s.trim()),diagnosisAliases:$('diagnosisAliases').value.split('\n').filter(s=>s.trim())}});$('editor').close();renderBank();}catch(e){$('editError').textContent=e.message;}};
 $('search').oninput=renderBank;
 $('clearSelection').onclick=run(async()=>{state=await api('CLEAR_SELECTION');$('search').value='';$('codes').value='';renderBank();notice('已清除所有選取，可以重新選題。');});
 $('selectAll').onchange=run(async()=>{const ids=new Set(state.selected);for(const s of filtered)$('selectAll').checked?ids.add(s.id):ids.delete(s.id);state=await api('SELECT',{ids:[...ids]});renderBank();});
@@ -110,8 +149,14 @@ async function renderQuestion(){
   if(q.attempt.state==='revealed'){
     const ref=syllabus[q.slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&q.slide.answerOrigin!=='manual');
     const organ=useSyllabus?ref.organ:(q.slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(q.slide.diagnosis||ref.diagnosis);
+    const description=useSyllabus?(ref.description||q.slide.description||''):(q.slide.description||ref.description||'');
     const result=node('div','','result'),g=q.attempt.selfGrade||q.attempt.result.grade;
     result.append(node('strong',`${grades[g]}${q.attempt.selfGrade?'（自評）':''}`,g),node('p',`Organ：${organ} ${q.attempt.result.organ?'（符合）':'（未符合）'}`),node('p',`Diagnosis：${diagnosis} ${q.attempt.result.diagnosis?'（符合）':'（未符合）'}`));
+    if(description){
+      const descBox=node('div','','description-block');
+      descBox.append(node('strong','Description：'),node('div',description,'description-text'));
+      result.append(descBox);
+    }
     const source=node('details');source.append(node('summary','網站原文'),node('p',q.slide.sourceAnswerText));result.append(source);
     const buttons=node('div','','row grade-buttons');for(const[g,label]of Object.entries(grades)){const b=node('button',label,q.attempt.selfGrade===g?'selected':'');b.onclick=run(async()=>{if(busy)return;busy=true;try{await api('GRADE',{...payload,grade:g});renderKey='';await refresh();}finally{busy=false;}});buttons.append(b);}result.append(buttons);
     const next=node('button',q.index+1===q.total?'完成練習 →':'下一題 →','primary wide');next.onclick=run(async()=>{if(busy)return;busy=true;next.disabled=true;try{const r=await api('NEXT',payload);renderKey='';if(r.completed)tab('history');await refresh();}catch(e){busy=false;next.disabled=false;throw e;}});result.append(next);box.append(result);
@@ -131,10 +176,13 @@ function renderHistory(){
   for(const s of [...state.sessions].reverse()){
     const completed=s.attempts.filter(a=>a.state==='revealed'),correct=completed.filter(a=>(a.selfGrade||a.result.grade)==='correct').length,card=node('section','','history-card');
     card.append(node('strong',`${new Date(s.createdAt).toLocaleString('zh-TW')} · ${s.status==='active'?'進行中':s.status==='ended'?'已結束':'已完成'}`),node('p',`已答 ${completed.length} / ${s.slides.length} · 答對 ${correct} 題`));
-    const wrong=s.slides.filter((slide,i)=>s.attempts[i].state==='revealed'&&(s.attempts[i].selfGrade||s.attempts[i].result.grade)!=='correct').map(s=>s.id);
-    const button=node('button',s.status==='active'?'在目前分頁繼續':'錯題重練','secondary');button.disabled=!connected||!!active&&active.id!==s.id||s.status!=='active'&&!wrong.length;
-    button.onclick=run(async()=>{if(s.status==='active')await api('RESUME',{id:s.id});else await api('START',{ids:wrong,count:wrong.length});renderKey='';tab('exam');await refresh();});card.append(button);
-    if(s.status!=='active'){const details=node('details');details.append(node('summary','查看逐題答案'));s.slides.forEach((slide,i)=>{const a=s.attempts[i];if(a.state!=='revealed')return;const g=a.selfGrade||a.result.grade,row=node('div','','attempt');const ref=syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual'),organ=useSyllabus?ref.organ:(slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis);row.append(node('strong',`${slide.code} · ${grades[g]}`,g),node('p',`你的答案：${a.draft.organ} / ${a.draft.diagnosis}`),node('p',`標準答案：${organ} / ${diagnosis}`));details.append(row);});card.append(details);}$('history').append(card);
+    const wrong=[...new Set(s.slides.filter((slide,i)=>s.attempts[i].state==='revealed'&&(s.attempts[i].selfGrade||s.attempts[i].result.grade)!=='correct').map(s=>s.id))];
+    const buttonText=s.status==='active'?'在目前分頁繼續':(wrong.length?`重做錯題（${wrong.length} 題）`:'全對無錯題');
+    const buttonCls=s.status==='active'?'secondary':(wrong.length?'primary':'secondary');
+    const button=node('button',buttonText,buttonCls);
+    button.disabled=!connected||(!!active&&active.id!==s.id)||(s.status!=='active'&&!wrong.length);
+    button.onclick=run(async()=>{if(s.status==='active'){await api('RESUME',{id:s.id});renderKey='';tab('exam');await refresh();}else await redoWrong(wrong);});card.append(button);
+    if(s.status!=='active'){const details=node('details');details.append(node('summary','查看逐題答案'));s.slides.forEach((slide,i)=>{const a=s.attempts[i];if(a.state!=='revealed')return;const g=a.selfGrade||a.result.grade,row=node('div','','attempt');const ref=syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual'),organ=useSyllabus?ref.organ:(slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis),description=useSyllabus?(ref.description||slide.description||''):(slide.description||ref.description||'');row.append(node('strong',`${slide.code} · ${grades[g]}`,g),node('p',`你的答案：${a.draft.organ} / ${a.draft.diagnosis}`),node('p',`標準答案：${organ} / ${diagnosis}`));if(description){const descBox=node('div','','description-block');descBox.append(node('strong','Description：'),node('div',description,'description-text'));row.append(descBox);}details.append(row);});card.append(details);}$('history').append(card);
   }
 }
 $('export').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({schemaVersion:2,sessions:state.sessions},null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='slide-practice-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

@@ -230,7 +230,8 @@ export const syllabus = {
       "Splenic congestion",
       "Chronic passive congestion"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Red pulp expansion\n2. Red pulp congestion (& fibrosis)\n3. Dilated sinusoids"
   },
   "PA0015": {
     "slideNo": "17",
@@ -239,14 +240,16 @@ export const syllabus = {
     "diagnosisAliases": [
       "Aspergillus infection"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Fungal hyphae with septa and acute-angle branching\n2. Chronic inflammation\n3. Fibrosis\n4. Anthracosis"
   },
   "PA0017": {
     "slideNo": "18",
     "diagnosis": "Anthracosis",
     "organ": "Lung",
     "diagnosisAliases": [],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Dark black pigments in macrophages/histiocytes"
   },
   "PA0021": {
     "slideNo": "22",
@@ -264,7 +267,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Zygomycosis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Aseptate hyphae with wide-angle branching\n2. Caseating granulomatous inflammation"
   },
   "PA0024": {
     "slideNo": "24",
@@ -312,7 +316,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Sinus"
-    ]
+    ],
+    "description": "1. Submucosal mixed inflammatory cell infiltrate of lymphocytes, plasma cells, and eosinophils\n2. Submucosal edema\n3. Basement membrane thickening"
   },
   "PA0045": {
     "slideNo": "30",
@@ -371,7 +376,8 @@ export const syllabus = {
     "organAliases": [
       "Anorectum",
       "Rectum"
-    ]
+    ],
+    "description": "1. Dilated and congested submucosal vessels\n2. Thrombosis\n3. Organization & recanalization"
   },
   "PA0061": {
     "slideNo": "43",
@@ -419,7 +425,8 @@ export const syllabus = {
       "Fatty change",
       "Steatosis (fatty change)"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Lipid droplets in hepatocytes"
   },
   "PA0075": {
     "slideNo": "59",
@@ -439,7 +446,8 @@ export const syllabus = {
       "Nutmeg liver (centrilobular congestion and necrosis)",
       "Chronic passive congestion"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Centrilobular [zone 3] congestion\n2. Centrilobular [zone 3] hepatocyte necrosis"
   },
   "PA0081": {
     "slideNo": "65",
@@ -448,7 +456,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Enzymatic fat necrosis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Shadowy outlines of necrotic fat cells\n2. Basophilic calcium deposits\n3. Inflammation"
   },
   "PA0096": {
     "slideNo": "76",
@@ -458,11 +467,13 @@ export const syllabus = {
       "Infarction",
       "Renal infarct",
       "Acute tubular necrosis",
-      "ATN"
+      "ATN",
+      "Infarct/Infarction"
     ],
     "organAliases": [
       "Renal"
-    ]
+    ],
+    "description": "1. Wedge-shaped coagulative necrosis\n2. Acute tubular necrosis\n3. Thrombosis"
   },
   "PA0097": {
     "slideNo": "77",
@@ -474,7 +485,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Renal"
-    ]
+    ],
+    "description": "1. Tubular epithelial coagulative necrosis\n2. Dead cells with preserved cellular outlines\n3. Cytoplasmic eosinophilia, may glassy appearance, may vacuolated\n4. Nuclear changes: karyolysis, pyknosis, karyorrhexis\n5. An inflammatory infiltrate"
   },
   "PA0100": {
     "slideNo": "81",
@@ -519,7 +531,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Foreign body granuloma"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Center: Suture\n2. Periphery: Granulomatous inflammation\n3. Epithelioid macrophages/histiocytes\n4. Multinucleated giant cells\n5. Lymphocytes, plasma cells\n6. Fibrosis/scar\n7. Other finding: Fat necrosis"
   },
   "PA0144": {
     "slideNo": "120",
@@ -528,12 +541,14 @@ export const syllabus = {
     "diagnosisAliases": [
       "Intradermal melanocytic nevus",
       "Melanocytic nevus",
-      "Intradermal nevus, skin (scalp)"
+      "Intradermal nevus, skin (scalp)",
+      "Intradermal (melanocytic) nevus"
     ],
     "organAliases": [
       "Skin (scalp)",
       "Scalp"
-    ]
+    ],
+    "description": "1. Nests & cords of proliferative melanocytes\n2. Brown-black melanin pigmentation\n3. Adipocytic metaplasia"
   },
   "PA0158": {
     "slideNo": "135",
@@ -556,7 +571,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Brain"
-    ]
+    ],
+    "description": "1. Focal liquefactive necrosis\n2. Loss of the original structure → loosening of the tissue\n3. Neutrophil infiltration or “microabscess” may be present\n4. Reactive gliosis\n5. Gitter cells\n6. Histiocytes with phagocytosed myelin"
   },
   "PA0171": {
     "slideNo": "3",
@@ -621,7 +637,8 @@ export const syllabus = {
       "TB",
       "Caseous necrosis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Center: Caseous necrosis\n2. A structureless collection of lysed cells & amorphous granular debris\n3. Periphery: Granulomatous inflammation\n4. Epithelioid macrophages\n5. Langhans giant cells\n6. Lymphocytes\n7. Fibrosis"
   },
   "PA0201": {
     "slideNo": "147",
@@ -631,7 +648,8 @@ export const syllabus = {
       "Candida infection",
       "Candida esophagitis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Fungal yeasts and pseudohyphae\n2. Hyperkeratosis, parakeratosis\n3. Chronic inflammation\n4. Bacterial clumps"
   },
   "PA0202": {
     "slideNo": "148",
@@ -641,7 +659,8 @@ export const syllabus = {
       "Chronic peptic ulcer",
       "Peptic ulcer"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Mucosa defect with fibrinous necrosis and neutrophil\n2. Granulation tissue\n3. Fibrosis/scar\n4. Other finding: Fibrinous inflammation on the serosal surface"
   },
   "PA0206": {
     "slideNo": "150",
@@ -655,7 +674,8 @@ export const syllabus = {
     "organAliases": [
       "Colon",
       "Large intestine"
-    ]
+    ],
+    "description": "1. Round microorganisms\n2. Foamy cytoplasm\n3. Round, eccentric nucleus\n4. Ingested red blood cells\n5. Ulcer with inflamed granulation tissue and acute suppurative inflammation (transmural neutrophil infiltration)"
   },
   "PA0207": {
     "slideNo": "151",
@@ -679,7 +699,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Colon"
-    ]
+    ],
+    "description": "1. Yellow-brown ceroid-laden macrophages in the lamina propria"
   },
   "PA0211": {
     "slideNo": "153",
@@ -689,7 +710,8 @@ export const syllabus = {
       "Hemochromatosis",
       "Iron overload"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Golden yellow-brown, refractile hemosiderin accumulation in hepatocytes"
   },
   "PA0214": {
     "slideNo": "156",
@@ -698,7 +720,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Cholestasis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Green-brown bile pigments in hepatocytes and dilated canaliculi\n2. Portal edema, prominent ductular reaction & neutrophil infiltration (“pericholangitis”)\n3. Swelling of periportal hepatocytes (“feathery degeneration”)"
   },
   "PA0215": {
     "slideNo": "157",
@@ -708,7 +731,8 @@ export const syllabus = {
       "Congestive cirrhosis",
       "Cardiac cirrhosis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Centrilobular congestion\n2. Centrilobular hepatocyte fibrosis"
   },
   "PA0216": {
     "slideNo": "158",
@@ -718,7 +742,8 @@ export const syllabus = {
       "Hemozoin pigment",
       "Malaria"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Brown-black malaria pigments in macrophages and hepatocytes"
   },
   "PA0218": {
     "slideNo": "160",
@@ -727,11 +752,14 @@ export const syllabus = {
     "diagnosisAliases": [
       "CMV infection",
       "Cytomegalovirus infection",
-      "CMV nephritis"
+      "CMV nephritis",
+      "Cytomegalovirus (CMV) infection",
+      "Cytomegaloviral (CMV) nephritis"
     ],
     "organAliases": [
       "Renal"
-    ]
+    ],
+    "description": "1. Infected cells\n2. Cellular and nuclear enlargement\n3. Large intranuclear basophilic inclusions with halos/haloes\n4. Small cytoplasmic basophilic inclusions\n5. Chronic inflammation"
   },
   "PA0220": {
     "slideNo": "162",
@@ -741,7 +769,8 @@ export const syllabus = {
       "Benign prostatic hyperplasia",
       "BPH"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Nodules of cystically dilated hyperplastic glands"
   },
   "PA0226": {
     "slideNo": "167",
@@ -795,7 +824,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Ovary (此片被病灶佔滿，其實沒有可供辨認為卵巢之組織)"
-    ]
+    ],
+    "description": "1. Sulfur granules composed of clumped colonies of bacteria in center with eosinophilic periphery with club-like projections (Splendore-Hoeppli phenomenon)\n2. Acute and chronic inflammation with abscess formation\n3. May have granulomatous inflammation (suppurative granulomatous inflammation)"
   },
   "PA0255": {
     "slideNo": "80",
@@ -805,7 +835,8 @@ export const syllabus = {
       "Genital wart",
       "HPV infection"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Papillomatosis\n2. Koilocytosis\n3. Acanthosis\n4. Hyperkeratosis\n5. Parakeratosis"
   },
   "PA0260": {
     "slideNo": "190",
@@ -854,7 +885,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Acute appendicitis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Mucosal and mural neutrophil infiltration, involving muscularis propria\n2. Mucosal ulceration\n3. Luminal and mural abscess\n4. Fibrinous inflammation on the serosal surface"
   },
   "PA0271": {
     "slideNo": "117",
@@ -865,7 +897,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Skin (shin)"
-    ]
+    ],
+    "description": "1. A cup-like lesion with a crater\n2. Epidermal hyperplasia\n3. Molluscum bodies (Henderson-Patterson bodies) in the crater: large, eosinophilic to basophilic intracytoplasmic inclusions that push aside nucleus"
   },
   "PA0273": {
     "slideNo": "28",
@@ -993,7 +1026,8 @@ export const syllabus = {
       "Pneumocystis pneumonia",
       "PCP"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Foamy, granular, eosinophilic exudate in the alveolar spaces\n2. Interstitial thickening and inflammation\n3. Other finding: focal ossification"
   },
   "PA0305": {
     "slideNo": "171",
@@ -1016,7 +1050,8 @@ export const syllabus = {
       "Heart valve",
       "Heart",
       "Mitral valve"
-    ]
+    ],
+    "description": "1. Valve destruction with necrosis\n2. Vegetation: composed of fibrin, bacterial clumps, and inflammatory infiltrate (neutrophilic or lymphohistiocytic)\n3. Inflamed granulation tissue\n4. In chronic lesion: organization and calcification"
   },
   "PA0307": {
     "slideNo": "20",
@@ -1091,7 +1126,8 @@ export const syllabus = {
       "Intestine",
       "Intestine/colon",
       "Large intestine"
-    ]
+    ],
+    "description": "1. Coagulative necrosis with hemorrhage – mucosal and transmural (impending perforation)\n2. Chronic changes: strictures, crypt distortion, reactive epithelial cells"
   },
   "PA0314": {
     "slideNo": "197",
@@ -1110,7 +1146,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Cryptococcus infection"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Numerous round to oval, refractile, thick-walled fungal yeasts\n2. Focal necrosis\n3. Granulomatous inflammation (vaguely-formed granuloma / macrophage infiltration with scattered multinucleated giant cells)\n4. Infiltration of lymphocytes and plasma cells\n5. Intraalveolar fibrin deposition\n6. Fibrosis"
   },
   "PA0332": {
     "slideNo": "145",
@@ -1123,8 +1160,11 @@ export const syllabus = {
     ],
     "organAliases": [
       "Skin (thigh)",
-      "Thigh"
-    ]
+      "Thigh",
+      "Oral cavity (mouth floor)",
+      "Oral cavity"
+    ],
+    "description": "1. Cytopathic effects compatible with herpes infection\n2. Multinucleation\n3. Margination of chromatin\n4. Molding of nuclei\n5. Ulcer with neutrophil infiltration and necrotic debris"
   },
   "PA0333": {
     "slideNo": "52",
@@ -1155,7 +1195,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Myocardium"
-    ]
+    ],
+    "description": "1. Multifocal fibrosis replacing myocytes\n2. Slightly increased mononuclear inflammatory cells\n3. Focal granulation tissue\n4. Neovascularization (capillary proliferation), hemorrhage\n5. Myocyte vacuolization, especially subendocardial areas\n6. Hypertrophic changes of cardiomyocytes\n7. Increased cell and nuclear size"
   },
   "PA0336": {
     "slideNo": "132",
