@@ -16,9 +16,15 @@ nav .tab.active::after{content:"";position:absolute;left:0;right:0;bottom:0;heig
 footer{flex-shrink:0;text-align:right;color:#9aa0a6;font-size:11px;padding:6px 18px 10px;user-select:none;background:#fff}
 footer a{color:#9aa0a6;text-decoration:none;font-weight:500}
 footer a:hover{text-decoration:underline;color:#1a73e8}
-.description-block{margin:10px 0;padding:10px 12px;background:#fff;border:1px solid #e2e9f3;border-radius:8px;font-size:13px;line-height:1.6}
-.description-block strong{display:block;margin-bottom:4px;color:#202124}
-.description-text{white-space:pre-wrap;color:#3c4043;font-size:12.5px;line-height:1.5}
+.description-block{margin:12px 0;padding:12px;background:#fff;border:1px solid #e2e9f3;border-radius:8px;font-size:15px;line-height:1.6}
+.description-block strong{display:block;margin-bottom:6px;color:#202124;font-size:15px}
+.description-text{white-space:pre-wrap;color:#3c4043;font-size:15px;line-height:1.6}
+.result>strong:first-child{font-size:15px;display:block;margin-bottom:8px}
+.result p{margin:8px 0;font-size:15px;line-height:1.6}
+.result details summary{font-size:15px;padding:6px 0;color:#5f6368}
+.result details p{font-size:15px;line-height:1.6}
+.grade-buttons{display:flex;gap:8px;margin-top:14px}
+.grade-buttons button{font-size:15px;padding:8px 12px;flex:1;text-align:center}
 .completed-card{background:#f8fafd;border:1px solid #e2e9f3;border-radius:12px;padding:20px 16px;margin-top:20px;text-align:center}
 .completed-card h3{margin:0 0 10px;font-size:18px;color:#202124}
 .completed-card .stats{font-size:13px;color:#5f6368;margin-bottom:16px}
