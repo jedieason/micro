@@ -1,6 +1,34 @@
 /* Only text/label elements marked by the adapter are hidden; the site remains usable. */
 html[data-ntu-exam] [data-ntu-answer-hint] { visibility: hidden !important; }
 
+/* Defensive layout recovery: prevent ad-block or cosmetic filters from collapsing the main portal container */
+html body > div.container-fluid,
+html body > .container-fluid {
+  display: block !important;
+}
+
+.ntu-container-fluid {
+  display: block !important;
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+.ntu-container-fluid::before,
+.ntu-container-fluid::after {
+  display: table !important;
+  content: " " !important;
+  clear: both !important;
+}
+.ntu-container-fluid > .navbar-collapse,
+.ntu-container-fluid > .navbar-header {
+  margin-right: -15px !important;
+  margin-left: -15px !important;
+}
+.navbar > .ntu-container-fluid .navbar-brand {
+  margin-left: -15px !important;
+}
+
 /* Hide slide annotations before submitting answers in exam session */
 html[data-ntu-hide-annotations] #contentDiv svg,
 html[data-ntu-hide-annotations] #contentDiv svg *,

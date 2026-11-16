@@ -13,9 +13,23 @@
     const hide = Boolean(sessionId && examMode !== false && !revealed);
     document.documentElement.toggleAttribute('data-ntu-hide-annotations', hide);
   }
+  function ensureMainLayout() {
+    if (isViewer || !document.body) return;
+    const containers = document.querySelectorAll('body > .container-fluid, nav > .container-fluid, .container-fluid');
+    for (const el of containers) {
+      if (getComputedStyle(el).display === 'none') {
+        el.style.setProperty('display', 'block', 'important');
+        if (getComputedStyle(el).display === 'none') {
+          el.classList.remove('container-fluid');
+          el.classList.add('ntu-container-fluid');
+        }
+      }
+    }
+  }
   applyExamMode();
   applyAnnotationMask();
   maskHints();
+  ensureMainLayout();
   let selected = new Set();
   const additions = new Map();
   function setIcon(button, added) {
@@ -105,6 +119,7 @@
   }
   async function performScan() {
     if (isViewer) return {viewer:true};
+    ensureMainLayout();
     const dom = NtuScanner.scan(document, location.href), bridge = await tableData();
     const slides = new Map(dom.slides.map(s => [s.viewerUrl,s]));
     for (const slide of NtuScanner.scanTables(bridge.tables, location.href)) {
@@ -208,16 +223,27 @@
       maskHints();
       applyAnnotationMask();
     });
-    if(!isViewer)scan().catch(e=>{badge.textContent='讀取失敗 · 點此開啟側欄';console.warn(e.message);});
+    if(!isViewer) {
+      ensureMainLayout();
+      scan().catch(e=>{badge.textContent='讀取失敗 · 點此開啟側欄';console.warn(e.message);});
+    }
     let scheduled;
     const observer=new MutationObserver(records=>{
       if(records.every(r=>r.target===host || host.contains(r.target)))return;
-      clearTimeout(scheduled);scheduled=setTimeout(()=>{if(isViewer){maskHints();applyAnnotationMask();}else scan().catch(()=>{});},600);
+      clearTimeout(scheduled);scheduled=setTimeout(()=>{
+        if(isViewer){
+          maskHints();
+          applyAnnotationMask();
+        } else {
+          ensureMainLayout();
+          scan().catch(()=>{});
+        }
+      },600);
     });
     observer.observe(document.body,{childList:true,subtree:true,characterData:true});
     // Retry delayed DataTables initialization, including its detached rows.
-    const retry=setTimeout(()=>{if(!isViewer)scan().catch(()=>{});},2500);
-    const timer=setInterval(()=>{if(!document.hidden&&!isViewer)scan().catch(()=>{});},8000);
+    const retry=setTimeout(()=>{if(!isViewer){ensureMainLayout();scan().catch(()=>{});}},2500);
+    const timer=setInterval(()=>{if(!document.hidden&&!isViewer){ensureMainLayout();scan().catch(()=>{});}},8000);
     window.addEventListener('pagehide',()=>{observer.disconnect();clearInterval(timer);clearTimeout(retry);clearTimeout(scheduled);},{once:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
