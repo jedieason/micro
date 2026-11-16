@@ -45,10 +45,31 @@ export function grade(answer, slide) {
   const diagnosis = matches(answer.diagnosis, slide.diagnosis, slide.diagnosisAliases);
   return {organ, diagnosis, grade: organ && diagnosis ? 'correct' : organ || diagnosis ? 'partial' : 'incorrect'};
 }
+export function cleanDiagnosis(diagnosis, organ = '') {
+  let d = String(diagnosis || '').trim();
+  if (!d) return '';
+  let prev = '';
+  while (d !== prev) {
+    prev = d;
+    d = d.replace(/[,;，；\s]+(?:\d+(?:\.\d+)?\s*[ymdw]?\s*[MF]|GA\s*\d+(?:\+\d+)?\s*[MF]|\?{1,2})$/i, '').trim();
+    if (organ) {
+      const oLower = String(organ).trim().toLowerCase();
+      if (oLower && d.toLowerCase().endsWith(oLower)) {
+        const prefix = d.slice(0, -oLower.length).trim();
+        if (prefix === '' || /[,;，；\s]$/.test(d.slice(0, -oLower.length))) {
+          d = prefix.replace(/[,;，；\s]+$/, '').trim();
+        }
+      }
+    }
+  }
+  return d.replace(/[,;，；\s]+$/, '').trim();
+}
 export function cleanSlide(input) {
   const url = viewerURL(input.viewerUrl);
   const text = key => String(input[key] || '').trim().slice(0, 10000);
-  return {id: url, code: code(input.code), viewerUrl: url, organ: text('organ'), diagnosis: text('diagnosis'),
+  const organ = text('organ');
+  const diagnosis = cleanDiagnosis(text('diagnosis'), organ);
+  return {id: url, code: code(input.code), viewerUrl: url, organ, diagnosis,
     description: text('description'),
     organAliases: Array.isArray(input.organAliases) ? input.organAliases.map(String).slice(0,100) : [],
     diagnosisAliases: Array.isArray(input.diagnosisAliases) ? input.diagnosisAliases.map(String).slice(0,100) : [],

@@ -67,7 +67,6 @@ export const units = [
     "name": "Immunological disorder",
     "codes": [
       "PA0030",
-      "PA0284",
       "PA0061",
       "PA0264",
       "PA0302"
@@ -220,7 +219,8 @@ export const syllabus = {
     "organAliases": [
       "Left atrium",
       "Heart, left atrium"
-    ]
+    ],
+    "description": "1. Well-circumscribed tumor\n2. Bland spindle or stellate cells with oval nuclei arranged singly or in cords and rings\n3. Myxoid stroma\n4. Abundant vessels\n5. Hemorrhage and hemosiderin"
   },
   "PA0008": {
     "slideNo": "10",
@@ -286,7 +286,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Amyloidosis"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Amorphous, eosinophilic, hyaline extracellular deposits\n2. Cracking artifacts\n3. Other findings:\n- Lymphocytes\n- Multinucleated giant cells (foreign body-like reaction)"
   },
   "PA0040": {
     "slideNo": "26",
@@ -351,7 +352,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "SCC"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Tumor cells have pleomorphic hyperchromatic nuclei and prominent nucleoli, arranged in solid sheets & nests\n2. Polygonal tumor cells with abundant eosinophilic cytoplasm, keratinization and intercellular bridges\n3. Invasion to the lamina propria, muscularis mucosae & submucosa\n4. Desmoplastic stromal reaction\n5. Squamous dysplasia also present (precursor in the background)"
   },
   "PA0055": {
     "slideNo": "36",
@@ -363,7 +365,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Small intestine"
-    ]
+    ],
+    "description": "1. Infiltrative growth, stromal invasion (deep into the subserosa)\n2. Uniform cells with pink cytoplasm, round to oval nuclei, 'salt and pepper' chromatin\n3. Islands, nests, trabeculae, glands"
   },
   "PA0059": {
     "slideNo": "41",
@@ -385,9 +388,12 @@ export const syllabus = {
     "organ": "Liver",
     "diagnosisAliases": [
       "ACR",
-      "Acute rejection"
+      "Acute rejection",
+      "T-cell-mediated rejection",
+      "TCMR"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Mixed portal inflammation:\n- Predominantly lymphocytes\n- Admixed neutrophils and eosinophils\n2. Bile duct injury:\n- Inflammatory cell infiltration\n- Bile duct epithelial damage\n3. Endotheliitis:\n- Subendothelial venous inflammation\n4. Severe cases:\n- Perivenular parenchymal necrosis"
   },
   "PA0067": {
     "slideNo": "51",
@@ -498,7 +504,8 @@ export const syllabus = {
     "organAliases": [
       "Skin",
       "Skin (vulva)"
-    ]
+    ],
+    "description": "1. Infiltrative tumor involving the epidermis and dermis\n2. Highly cellular tumor composed of irregular nests or single cells with enlarged pleomorphic nuclei, prominent nucleoli, and melanin pigments\n3. High mitotic activity\n4. Brisk tumor-infiltrating lymphocytes"
   },
   "PA0102": {
     "slideNo": "83",
@@ -510,7 +517,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Cervix"
-    ]
+    ],
+    "description": "1. Infiltrative, angulated, irregular solid nests of tumor cells with stromal desmoplasia\n2. Tumor cells show pleomorphic hyperchromatic nuclei, increased mitosis, and squamous differentiation: polygonal shape, abundant eosinophilic cytoplasm, keratinization and intercellular bridges\n3. Other finding: acute and chronic inflammation with multinucleated giant cells (bystander, not always present)"
   },
   "PA0104": {
     "slideNo": "85",
@@ -522,7 +530,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Uterus"
-    ]
+    ],
+    "description": "1. A well-circumscribed tumor composed of uniform spindle cells arranged in intersecting fascicles\n2. Tumor cells with cigar-shaped nuclei and eosinophilic cytoplasm\n3. No cytologic atypia"
   },
   "PA0143": {
     "slideNo": "119",
@@ -559,7 +568,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Soft tissue (near T-level vertebra)"
-    ]
+    ],
+    "description": "1. Well-circumscribed / encapsulated tumor\n2. Uniform spindle cells with wavy nuclei\n3. Hypercellular (compact) areas with intersecting fascicles and whorling of spindle cells and nuclear palisading, forming Verocay bodies (Antoni A)\n4. Hypocellular areas with myxoid stroma (Antoni B)\n5. May have hyalinized vessels\n6. May have lymphoid aggregates at the periphery\n7. May have degenerative changes: scattered bizarre nuclei, cystic change, xanthomatous change"
   },
   "PA0162": {
     "slideNo": "138",
@@ -583,7 +593,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Heart"
-    ]
+    ],
+    "description": "1. Amorphous, eosinophilic, hyaline extracellular deposits\n2. Deposition patterns: myocardial interstitial (pericellular / nodular); vascular / microvascular; also deposits in the endocardium and epicardium"
   },
   "PA0174": {
     "slideNo": "19",
@@ -615,7 +626,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Soft tissue (cheek)"
-    ]
+    ],
+    "description": "1. Infiltrative (diffuse type) or multinodular growth / bag-of-worms appearance (plexiform type)\n2. Bland spindle cells with wavy, tapering nuclei\n3. Myxoid to collagenous stroma\n4. Shredded-carrot-like collagen fibers\n5. No cytologic atypia\n6. May have entrapped nerves\n7. May have mast cell infiltration"
   },
   "PA0197": {
     "slideNo": "143",
@@ -626,7 +638,8 @@ export const syllabus = {
       "Rheumatic carditis",
       "Rheumatic heart disease"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Acute inflammation involving the pericardium, myocardium and endocardium\n2. Aschoff nodules composed of numerous lymphocytes and histiocytes, some forming multinucleated giant cells (Aschoff giant cells), admixed with Anitschkow cells"
   },
   "PA0198": {
     "slideNo": "144",
@@ -688,7 +701,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Colon"
-    ]
+    ],
+    "description": "1. Multiple polypoid lesions\n2. Atypical tall columnar cells with nuclear hyperchromasia, elongation, and stratification, arranged in tubules\n3. No stromal invasion"
   },
   "PA0208": {
     "slideNo": "152",
@@ -779,7 +793,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "Rhabdomyosarcoma"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. (Infiltrative tumor border — cannot be assessed on this slide)\n2. Hypercellular & hypocellular areas, higher cellularity around blood vessels\n3. Primitive spindle and round to stellate cells with eosinophilic cytoplasm, eccentric nuclei, and cross striation\n4. Myxoid stroma"
   },
   "PA0247": {
     "slideNo": "142",
@@ -790,7 +805,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Retina"
-    ]
+    ],
+    "description": "1. Small round blue cells arising from the retina\n2. May grow into the vitreous cavity\n3. Flexner-Wintersteiner rosettes:\n- Tumor cells arranged around a central lumen\n4. Fleurettes:\n- Photoreceptor differentiation\n5. Other finding:\n- Necrosis"
   },
   "PA0248": {
     "slideNo": "187",
@@ -812,7 +828,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Large intestine"
-    ]
+    ],
+    "description": "1. Atypical tall columnar cells arranged in a complex glandular pattern\n2. Nuclear hyperchromasia, elongation, and stratification\n3. Prominent nucleoli\n4. Stromal desmoplasia\n5. Dirty necrosis\n6. Stromal invasion (to the lamina propria, muscularis mucosae, submucosa and muscularis propria)"
   },
   "PA0251": {
     "slideNo": "39",
@@ -845,7 +862,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "NPC"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Infiltrative growth\n2. Sheets of tumor cells mixed with abundant lymphocytes\n3. Tumor cells:\n- Oval nuclei, prominent nucleoli, vesicular chromatin\n- Indistinct cell borders imparting a syncytial appearance"
   },
   "PA0263": {
     "slideNo": "192",
@@ -866,7 +884,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Nose"
-    ]
+    ],
+    "description": "1. Submucosal eosinophil-rich inflammatory infiltrate\n2. Submucosal edema\n3. Basement membrane thickening\n4. Other finding:\n- Squamous metaplasia"
   },
   "PA0265": {
     "slideNo": "45",
@@ -925,7 +944,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Gastric"
-    ]
+    ],
+    "description": "1. Infiltrative growth, stromal invasion (deep into the muscularis propria)\n2. Small clusters or single discohesive cells with signet-ring features (voluminous intracellular mucin + pushed-aside nuclei)\n3. Mild cytologic atypia: nuclear hyperchromasia\n4. Stromal desmoplasia"
   },
   "PA0280": {
     "slideNo": "35",
@@ -964,11 +984,13 @@ export const syllabus = {
     "organ": "Kidney",
     "diagnosisAliases": [
       "Chronic allograft rejection",
-      "Chronic renal allograft rejection"
+      "Chronic renal allograft rejection",
+      "Chronic active rejection"
     ],
     "organAliases": [
       "Renal"
-    ]
+    ],
+    "description": "1. Tubules:\n- Tubulitis\n- Tubular atrophy\n2. Interstitium:\n- Interstitial inflammation\n- Interstitial fibrosis\n3. Microvasculature:\n- Peritubular capillaritis\n- Glomerulitis\n4. Larger vessels:\n- Endotheliitis\n- Intimal thickening"
   },
   "PA0285": {
     "slideNo": "88",
@@ -979,7 +1001,8 @@ export const syllabus = {
       "Dermoid cyst",
       "Mature (cystic) teratoma"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Cystic tumor composed of mature tissue from different germ layers, including squamous epithelium, skin adnexa, glial tissue, nerves, adipose tissue, bone, cartilage, respiratory epithelium, and choroid plexus (in the exam, list the tissues you actually see on the slide)"
   },
   "PA0286": {
     "slideNo": "159",
@@ -1006,7 +1029,8 @@ export const syllabus = {
       "Soft tissue (kidney)",
       "Soft tissue",
       "Renal"
-    ]
+    ],
+    "description": "1. Triphasic pattern:\n- Blastemal component: Sheets of small round blue cells\n- Epithelial component: Epithelial cells forming tubular, glomerular, or papillary structures\n- Stromal component: Spindle cells in a fibromyxoid background\n2. Other findings:\n- Necrosis\n- Hemorrhage\n- Anaplasia (not present in this slide)\n- Heterologous elements (not present in this slide)"
   },
   "PA0295": {
     "slideNo": "118",
@@ -1015,7 +1039,8 @@ export const syllabus = {
     "diagnosisAliases": [
       "BCC"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Epidermal tumor with dermal invasion\n2. Atypical basaloid tumor cells with elongated hyperchromatic nuclei, arranged in large nests / rounded small nests / irregular jagged nests and cords with peripheral palisading and clefting\n3. Increased mitosis and apoptosis\n4. Mucinous / fibromyxoid stroma\n5. Solar elastosis (background)\n6. Perineural invasion (not on this slide)"
   },
   "PA0302": {
     "slideNo": "191",
@@ -1036,7 +1061,8 @@ export const syllabus = {
     "diagnosisAliases": [],
     "organAliases": [
       "Adrenal"
-    ]
+    ],
+    "description": "1. Location:\n- Circumscribed tumor at adrenal medulla\n2. Neuroblasts:\n- Nests and sheets of small round to oval cells\n- Salt-and-pepper chromatin\n- Scant or indiscernible cytoplasm (high N:C ratio)\n- Vague cytoplasmic borders\n3. Background:\n- Eosinophilic fibrillary material (neuropil)\n- Thin septa of Schwannian stroma (S100+)\n4. Arrangement:\n- Homer-Wright pseudorosettes (tumor cells surrounding neuropil)\n5. Other findings:\n- Extensive hemorrhage\n- Focal calcification"
   },
   "PA0306": {
     "slideNo": "4",
@@ -1083,7 +1109,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Gastric"
-    ]
+    ],
+    "description": "1. Infiltrative growth, stromal invasion (penetrates into the subserosal tissue)\n2. Irregular glands with focal compact arrangement\n3. Flattened, cuboidal to columnar tumor cells with eosinophilic cytoplasm and intracellular mucin\n4. Cytologic atypia: nuclear hyperchromasia, occasional prominent nucleoli\n5. Stromal desmoplasia\n6. Intestinal metaplasia and dysplasia\n7. Lymphovascular invasion, perineural invasion (may not be found)"
   },
   "PA0310": {
     "slideNo": "40",
@@ -1137,7 +1164,8 @@ export const syllabus = {
       "Cavernous hemangioma",
       "Capillary hemangioma"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Polypoid lesion composed of variably sized vessels arranged in a vaguely lobular pattern with a circumscribed border\n2. Closely packed thin-walled capillaries and dilated irregular vascular spaces\n3. Endothelial cells are uniform, flat, single-layered, without cytologic atypia"
   },
   "PA0316": {
     "slideNo": "198",
@@ -1209,7 +1237,8 @@ export const syllabus = {
       "Heart",
       "Pericardium",
       "Soft tissue"
-    ]
+    ],
+    "description": "1. Aggregation of lymphatic channels with bland-looking endothelial lining\n2. Amorphous lymph (proteinaceous fluid) in some spaces, containing lymphocytes and sometimes erythrocytes\n3. Lymphocytic aggregates"
   },
   "PA0337": {
     "slideNo": "82",
@@ -1223,7 +1252,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Uterine cervix"
-    ]
+    ],
+    "description": "1. Atypical squamous cells with nuclear enlargement, hyperchromasia, coarse chromatin, increased N/C ratio, pleomorphism, and increased mitosis, expanding to the upper 2/3 of the epithelium (CIN 2)\n2. Endocervical glandular involvement\n3. No stromal invasion"
   },
   "PA0338": {
     "slideNo": "96",
@@ -1237,7 +1267,8 @@ export const syllabus = {
     ],
     "organAliases": [
       "Uterine cervix"
-    ]
+    ],
+    "description": "1. Atypical squamous cells with nuclear enlargement, hyperchromasia, coarse chromatin, increased N/C ratio, pleomorphism, and increased mitosis, expanding to the full thickness of the epithelium (CIN 3)\n2. Endocervical glandular involvement\n3. No stromal invasion"
   },
   "PA0340": {
     "slideNo": "2",
@@ -1250,7 +1281,8 @@ export const syllabus = {
     "organAliases": [
       "Aorta",
       "Artery (aorta)"
-    ]
+    ],
+    "description": "1. Fibrous cap with smooth muscle cells and collagen\n2. Necrotic core with cholesterol clefts and foam cells\n3. Macrophages and lymphocytes"
   },
   "PA0341": {
     "slideNo": "146",
@@ -1262,7 +1294,8 @@ export const syllabus = {
       "Neonatal respiratory distress syndrome",
       "NRDS"
     ],
-    "organAliases": []
+    "organAliases": [],
+    "description": "1. Alveoli:\n- Variable atelectasis and dilation\n- Edematous, thickened alveolar septa\n2. Hyaline membrane lining alveolar spaces:\n- Homogeneous eosinophilic linear material closely adherent to the alveolar surface\n3. Other finding:\n- Hemorrhage may be present"
   },
   "PA0342": {
     "slideNo": "69",
@@ -1306,3 +1339,61 @@ export const syllabus = {
     "organAliases": []
   }
 };
+
+export function lookupSyllabus(input, text = '') {
+  if (!input) return null;
+  const slide = typeof input === 'object' ? input : { code: String(input) };
+  const rawCode = String(slide.code || (typeof input === 'string' ? input : '') || '').trim().toUpperCase();
+
+  // 1. 若代號直接符合 syllabus key
+  if (rawCode) {
+    const normalized = rawCode.replace(/^([A-Z]+)0*(\d+)$/, (_, p, n) => p + n.padStart(4, '0'));
+    if (syllabus[normalized]) return { ...syllabus[normalized], code: normalized };
+    if (syllabus[rawCode]) return { ...syllabus[rawCode], code: rawCode };
+  }
+
+  // 2. 若物件明確帶有 slideNo（切片號），優先比對 slideNo
+  const directSlideNo = slide.slideNo ? String(parseInt(slide.slideNo, 10)) : '';
+  if (directSlideNo) {
+    for (const [codeKey, entry] of Object.entries(syllabus)) {
+      if (entry.slideNo && String(entry.slideNo) === directSlideNo) {
+        return { ...entry, code: codeKey };
+      }
+    }
+  }
+
+  // 3. 原文或候選診斷文字模糊比對（診斷 + 器官雙重確認，精準度最高）
+  const candidateText = [slide.diagnosis, slide.organ, slide.sourceAnswerText, text]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  if (candidateText) {
+    for (const [codeKey, entry] of Object.entries(syllabus)) {
+      if (!entry.diagnosis) continue;
+      const diagLower = entry.diagnosis.toLowerCase();
+      if (candidateText.includes(diagLower)) {
+        const organLower = (entry.organ || '').toLowerCase();
+        if (organLower && candidateText.includes(organLower)) {
+          return { ...entry, code: codeKey };
+        }
+      }
+    }
+  }
+
+  // 4. 若代號尾端數字能對應到某張切片之 slideNo
+  if (rawCode) {
+    const numMatch = rawCode.match(/\d+$/);
+    if (numMatch) {
+      const numStr = String(parseInt(numMatch[0], 10));
+      for (const [codeKey, entry] of Object.entries(syllabus)) {
+        if (entry.slideNo && String(entry.slideNo) === numStr) {
+          return { ...entry, code: codeKey };
+        }
+      }
+    }
+  }
+
+  return null;
+}
+

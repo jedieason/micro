@@ -1,17 +1,12 @@
 import {cleanSlide, grade, ready, shuffle, parseCodes, viewerURL, isSite, reconcileCodeSelection} from './lib/core.js';
-import {units, unitCodes, syllabus} from './lib/units.js';
+import {units, unitCodes, syllabus, lookupSyllabus} from './lib/units.js';
 const KEY = 'slidePracticeV1';
 const initial = () => ({schemaVersion: 2, bank: [], selected: [], pendingCodes: [], unitIds: [], sessions: [], sources: {}});
-function lookupSyllabus(code) {
-  if (!code) return null;
-  const normalized = String(code).trim().toUpperCase().replace(/^([A-Z]+)0*(\d+)$/, (_, p, n) => p + n.padStart(4, '0'));
-  return syllabus[normalized] || syllabus[code] || null;
-}
 async function read() {
   const state={...initial(), ...(await chrome.storage.local.get(KEY))[KEY]};
   let changed = false;
   for (const slide of state.bank) {
-    const ref = lookupSyllabus(slide.code);
+    const ref = lookupSyllabus(slide, slide.sourceAnswerText);
     if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
       const origOrgan = slide.organ;
       const origDiagnosis = slide.diagnosis;
@@ -43,7 +38,7 @@ async function read() {
   }
   for (const s of state.sessions || []) {
     for (const slide of s.slides || []) {
-      const ref = lookupSyllabus(slide.code);
+      const ref = lookupSyllabus(slide, slide.sourceAnswerText);
       if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
         slide.organ = ref.organ;
         slide.diagnosis = ref.diagnosis;
@@ -87,7 +82,7 @@ async function handle(m, sender) {
       try {
         const slideCode = (String(input.code || '').trim().toUpperCase().match(/^([A-Z]+)(\d+)$/) || [])[0] ?
           String(input.code).trim().toUpperCase().replace(/^([A-Z]+)0*(\d+)$/, (_, p, n) => p + n.padStart(4, '0')) : input.code;
-        const ref = lookupSyllabus(slideCode);
+        const ref = lookupSyllabus(input, input.sourceAnswerText) || lookupSyllabus(slideCode);
         const parsed = ['site-columns', 'finding-pattern'].includes(input.answerOrigin);
         const hasSiteAnswer = parsed && !!input.organ && !!input.diagnosis;
         const isManual = input.answerOrigin === 'manual';
@@ -214,7 +209,7 @@ async function handle(m, sender) {
   const tabId = site ? sender.tab.id : m.tabId;
   const session = state.sessions.find(s => s.id === m.sessionId && s.tabId === tabId && s.status === 'active');
   const slide = session.slides[session.index], attempt = session.attempts[session.index];
-  const ref = lookupSyllabus(slide.code);
+  const ref = lookupSyllabus(slide, slide.sourceAnswerText);
   if (ref && ref.organ && ref.diagnosis && slide.answerOrigin !== 'manual') {
     slide.organ = ref.organ;
     slide.diagnosis = ref.diagnosis;

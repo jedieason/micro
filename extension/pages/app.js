@@ -1,5 +1,5 @@
 import {ready, isSite} from '../lib/core.js';
-import {units, syllabus} from '../lib/units.js';
+import {units, syllabus, lookupSyllabus} from '../lib/units.js';
 const $=id=>document.getElementById(id);
 let allQuestions=false;
 let state={bank:[],selected:[],pendingCodes:[],sessions:[],sources:{}}, filtered=[], tabId=null, connected=false, active=null, renderKey='', mode='bank', lastTabId=null;
@@ -76,7 +76,7 @@ function renderBank(){
   for(const slide of filtered){
     const row=node('div','','slide'),check=document.createElement('input');check.type='checkbox';check.checked=state.selected.includes(slide.id);check.setAttribute('aria-label',`選取 ${slide.code}`);
     check.onchange=run(async()=>{const ids=new Set(state.selected);check.checked?ids.add(slide.id):ids.delete(slide.id);state=await api('SELECT',{ids:[...ids]});renderBank();});
-    const ref=syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual');
+    const ref=lookupSyllabus(slide)||syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual');
     const organ=useSyllabus?ref.organ:(slide.organ||ref.organ||'待確認 Organ');
     const diagnosis=useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis||'待確認 Diagnosis');
     const content=node('div','','content'),heading=node('div',slide.code,'code');content.append(heading,node('p',diagnosis,'diagnosis'),node('span',organ,'small muted'));
@@ -94,7 +94,7 @@ function renderBank(){
   $('selectAll').checked=filtered.length>0&&filtered.every(s=>state.selected.includes(s.id));$('selectAll').indeterminate=filtered.some(s=>state.selected.includes(s.id))&&!$('selectAll').checked;
 }
 function editSlide(slide={}){
-  const ref=syllabus[slide.code]||{};
+  const ref=lookupSyllabus(slide)||syllabus[slide.code]||{};
   const useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual');
   $('editForm').reset();$('editError').textContent='';$('editTitle').textContent=slide.code?`${slide.code} · 答案`:'新增玻片';
   for(const [id,key]of Object.entries({editCode:'code',editURL:'viewerUrl',source:'sourceAnswerText'}))$(id).value=slide[key]||ref[key]||'';
@@ -147,7 +147,7 @@ async function renderQuestion(){
   form.addEventListener('input',()=>{const value=answer();drafts=drafts.then(()=>api('DRAFT',{...payload,answer:value})).catch(e=>{error.textContent=`草稿未儲存：${e.message}`;});});
   form.onsubmit=async event=>{event.preventDefault();if(busy)return;busy=true;submit.disabled=true;try{await drafts;await api('SUBMIT',{...payload,answer:answer()});await page('REVEAL',{revealed:true}).catch(()=>{});renderKey='';await refresh();}catch(e){error.textContent=e.message;busy=false;submit.disabled=false;}};
   if(q.attempt.state==='revealed'){
-    const ref=syllabus[q.slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&q.slide.answerOrigin!=='manual');
+    const ref=lookupSyllabus(q.slide)||syllabus[q.slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&q.slide.answerOrigin!=='manual');
     const organ=useSyllabus?ref.organ:(q.slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(q.slide.diagnosis||ref.diagnosis);
     const description=useSyllabus?(ref.description||q.slide.description||''):(q.slide.description||ref.description||'');
     const result=node('div','','result'),g=q.attempt.selfGrade||q.attempt.result.grade;
@@ -182,7 +182,7 @@ function renderHistory(){
     const button=node('button',buttonText,buttonCls);
     button.disabled=!connected||(!!active&&active.id!==s.id)||(s.status!=='active'&&!wrong.length);
     button.onclick=run(async()=>{if(s.status==='active'){await api('RESUME',{id:s.id});renderKey='';tab('exam');await refresh();}else await redoWrong(wrong);});card.append(button);
-    if(s.status!=='active'){const details=node('details');details.append(node('summary','查看逐題答案'));s.slides.forEach((slide,i)=>{const a=s.attempts[i];if(a.state!=='revealed')return;const g=a.selfGrade||a.result.grade,row=node('div','','attempt');const ref=syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual'),organ=useSyllabus?ref.organ:(slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis),description=useSyllabus?(ref.description||slide.description||''):(slide.description||ref.description||'');row.append(node('strong',`${slide.code} · ${grades[g]}`,g),node('p',`你的答案：${a.draft.organ} / ${a.draft.diagnosis}`),node('p',`標準答案：${organ} / ${diagnosis}`));if(description){const descBox=node('div','','description-block');descBox.append(node('strong','Description：'),node('div',description,'description-text'));row.append(descBox);}details.append(row);});card.append(details);}$('history').append(card);
+    if(s.status!=='active'){const details=node('details');details.append(node('summary','查看逐題答案'));s.slides.forEach((slide,i)=>{const a=s.attempts[i];if(a.state!=='revealed')return;const g=a.selfGrade||a.result.grade,row=node('div','','attempt');const ref=lookupSyllabus(slide)||syllabus[slide.code]||{},useSyllabus=Boolean(ref.organ&&ref.diagnosis&&slide.answerOrigin!=='manual'),organ=useSyllabus?ref.organ:(slide.organ||ref.organ),diagnosis=useSyllabus?ref.diagnosis:(slide.diagnosis||ref.diagnosis),description=useSyllabus?(ref.description||slide.description||''):(slide.description||ref.description||'');row.append(node('strong',`${slide.code} · ${grades[g]}`,g),node('p',`你的答案：${a.draft.organ} / ${a.draft.diagnosis}`),node('p',`標準答案：${organ} / ${diagnosis}`));if(description){const descBox=node('div','','description-block');descBox.append(node('strong','Description：'),node('div',description,'description-text'));row.append(descBox);}details.append(row);});card.append(details);}$('history').append(card);
   }
 }
 $('export').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({schemaVersion:2,sessions:state.sessions},null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='slide-practice-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};

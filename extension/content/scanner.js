@@ -23,23 +23,57 @@
     const index = headers.findIndex(h => names.includes(key(h)));
     return index >= 0 ? clean(cells[index]) : '';
   }
+  function cleanDiagnosisText(diagnosis, organ = '') {
+    let d = clean(diagnosis);
+    if (!d) return '';
+    d = d.replace(/[,;，；]\s*(?:\d+(?:\.\d+)?\s*[ymdw]?\s*[MF]|GA\d+(?:\+\d+)?[MF]|\?{1,2})\s*$/i, '').trim();
+    if (organ) {
+      const oLower = clean(organ).toLowerCase();
+      if (oLower && d.toLowerCase().endsWith(',' + oLower)) {
+        d = d.slice(0, -oLower.length - 1).trim();
+      } else if (oLower && d.toLowerCase().endsWith(';' + oLower)) {
+        d = d.slice(0, -oLower.length - 1).trim();
+      }
+    }
+    return d.replace(/[,;，；\s]+$/, '').trim();
+  }
   function findingAnswers(value) {
-    // The supplied HTML includes multiple diagnoses, infant ages and unknown ages.
-    // Parse the explicit age/sex and organ suffix; keep all preceding diagnoses.
-    const parts = clean(value).split(/[;；]/).map(clean);
-    return parts.length >= 3 && /^(?:\d+(?:\.\d+)?\s*[ymdw]?\s*[MF]|GA\d+(?:\+\d+)?[MF]|\?{1,2})$/i.test(parts.at(-2)) && parts[0] && parts.at(-1) && !/^\?+$/.test(parts.at(-1))
-      ? {diagnosis:parts.slice(0,-2).join('; '),organ:parts.at(-1),confirmed:true,answerOrigin:'finding-pattern'} : null;
+    const raw = clean(value);
+    if (!raw) return null;
+    const ageSexPattern = /^(?:\d+(?:\.\d+)?\s*[ymdw]?\s*[MF]|GA\d+(?:\+\d+)?[MF]|\?{1,2})$/i;
+    const semiParts = raw.split(/[;；]/).map(clean).filter(Boolean);
+    if (semiParts.length >= 3 && ageSexPattern.test(semiParts.at(-2)) && semiParts[0] && semiParts.at(-1) && !/^\?+$/.test(semiParts.at(-1))) {
+      const organ = semiParts.at(-1);
+      const diag = cleanDiagnosisText(semiParts.slice(0, -2).join('; '), organ);
+      return {diagnosis: diag, organ, confirmed: true, answerOrigin: 'finding-pattern'};
+    }
+    const commaParts = raw.split(/[,，]/).map(clean).filter(Boolean);
+    if (commaParts.length >= 3) {
+      if (ageSexPattern.test(commaParts.at(-1)) && commaParts[0] && commaParts.at(-2) && !/^\?+$/.test(commaParts.at(-2))) {
+        const organ = commaParts.at(-2);
+        const diag = cleanDiagnosisText(commaParts.slice(0, -2).join(', '), organ);
+        return {diagnosis: diag, organ, confirmed: true, answerOrigin: 'finding-pattern'};
+      }
+      if (ageSexPattern.test(commaParts.at(-2)) && commaParts[0] && commaParts.at(-1) && !/^\?+$/.test(commaParts.at(-1))) {
+        const organ = commaParts.at(-1);
+        const diag = cleanDiagnosisText(commaParts.slice(0, -2).join(', '), organ);
+        return {diagnosis: diag, organ, confirmed: true, answerOrigin: 'finding-pattern'};
+      }
+    }
+    return null;
   }
   function slideFromRow(row, headers, base, context = null) {
     const cells = [...row.querySelectorAll(':scope > td, :scope > th')].map(c => clean(c.textContent));
     const text = clean(row.textContent);
     const slideCode = code(field(headers, cells, ['scanid', 'slideid', 'code', '玻片代號', '編號'])) || code(text) || context?.code;
     if (!slideCode) return [];
-    const organ = field(headers, cells, ['organ', '器官']) || text.match(/(?:^|\s)Organ\s*[:：]\s*(.+?)(?=\s+(?:Diagnosis|ScanID)\s*[:：]|$)/i)?.[1] || '';
-    const diagnosis = field(headers, cells, ['diagnosis', 'diagnoses', '診斷', '病理診斷']) || text.match(/(?:^|\s)Diagnosis\s*[:：]\s*(.+?)(?=\s+(?:Organ|ScanID)\s*[:：]|$)/i)?.[1] || '';
+    const rawOrgan = field(headers, cells, ['organ', '器官']) || text.match(/(?:^|\s)Organ\s*[:：]\s*(.+?)(?=\s+(?:Diagnosis|ScanID)\s*[:：]|$)/i)?.[1] || '';
+    const rawDiagnosis = field(headers, cells, ['diagnosis', 'diagnoses', '診斷', '病理診斷']) || text.match(/(?:^|\s)Diagnosis\s*[:：]\s*(.+?)(?=\s+(?:Organ|ScanID)\s*[:：]|$)/i)?.[1] || '';
+    const organ = rawOrgan;
+    const diagnosis = cleanDiagnosisText(rawDiagnosis, organ);
     const finding = field(headers, cells, ['finding', 'findings', '病理發現']);
     const parsed = findingAnswers(finding) || cells.map(findingAnswers).find(Boolean) ||
-      (finding && !/[;；]/.test(finding) ? {diagnosis:finding,organ:'',confirmed:false,answerOrigin:'unparsed'} : null);
+      (finding && !/[;；]/.test(finding) ? {diagnosis:cleanDiagnosisText(finding, organ),organ:'',confirmed:false,answerOrigin:'unparsed'} : null);
     return urls(row.outerHTML + (context?.html || ''), base).map(viewerUrl => ({code: slideCode, viewerUrl, organ, diagnosis,
       confirmed: !!(organ && diagnosis), answerOrigin: organ && diagnosis ? 'site-columns' : 'unparsed',
       ...(!(organ && diagnosis) && parsed ? parsed : {}), sourceAnswerText: cells.length ? cells.join('\n') : text}));
